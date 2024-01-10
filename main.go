@@ -113,7 +113,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 	case ADIF:
 		renderAdif(outF, getters, contacts)
 	case CABRILLO:
-		NovSweepCW()
+		PrintCabrilloHeader()
 		renderCabrillo(outF, getters, contacts)
 	case HHLOG:
 		renderHhlog(outF, getters, contacts)
