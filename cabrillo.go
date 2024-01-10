@@ -17,6 +17,7 @@ func renderCabrillo(f *os.File, getters []FieldGetter, contacts []Contact) {
 		}
 		fmt.Fprintf(f, "\n")
 	}
+	fmt.Printf("END-OF-LOG:\n")
 }
 
 func NewCabrilloFieldPrinter() *CabrilloFieldPrinter {
