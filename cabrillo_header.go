@@ -139,14 +139,13 @@ func PrintCabrilloHeader() {
 		},
 	)
 
-	if contestCode == ARRL10 {
+	switch contestCode {
+	case ARRL10:
 		Aprl10MeterContest()
-	}
-
-	if contestCode == NAQP_CW {
+	case NAQP_CW:
 		NorthAmQSOCW()
-	}
-	if contestCode == ARRL_SS_CW {
+	case ARRL_SS_CW:
 		NovSweepCW()
 	}
+
 }
