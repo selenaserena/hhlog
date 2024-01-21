@@ -77,6 +77,10 @@ func askPower() string {
 	return askChoiceList("category-power", []string{"HIGH", "LOW", "QRP"})
 }
 
+func askTransmitter() string {
+	return askChoiceList("category-transmitter", []string{"ONE", "TWO"})
+}
+
 func Aprl10MeterContest() {
 	contestCode := "ARRL-10"
 	email := askEmail()
@@ -86,6 +90,7 @@ func Aprl10MeterContest() {
 	catMode := askMode()
 	power := askPower()
 	station := askStationType()
+	transmitter := askTransmitter()
 
 	fmt.Printf("START-OF-LOG: 3.0\n")
 	fmt.Printf("CONTEST: %s\n", contestCode)
@@ -96,6 +101,7 @@ func Aprl10MeterContest() {
 	fmt.Printf("CATEGORY-MODE: %s\n", catMode)
 	fmt.Printf("CATEGORY-POWER: %s\n", power)
 	fmt.Printf("CATEGORY-STATION: %s\n", station)
+	fmt.Printf("CATEGORY-TRANSMITTER: %s\n", transmitter)
 	fmt.Printf("EMAIL: %s\n", email)
 	//fmt.Printf("END-OF-LOG:\n")
 
