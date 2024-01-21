@@ -42,6 +42,10 @@ func askCallsign() string {
 	return askString("callsign")
 }
 
+func askEmail() string {
+	return askString("email")
+}
+
 func askStationType() string {
 	return askChoiceList("category-station", []string{"FIXED", "MOBILE", "SCHOOL"})
 }
@@ -75,6 +79,7 @@ func askPower() string {
 
 func Aprl10MeterContest() {
 	contestCode := "ARRL-10"
+	email := askEmail()
 	callSign := askCallsign()
 	locationCode := askLocationCode()
 	catOpAs := askAssistedCat()
@@ -91,6 +96,7 @@ func Aprl10MeterContest() {
 	fmt.Printf("CATEGORY-MODE: %s\n", catMode)
 	fmt.Printf("CATEGORY-POWER: %s\n", power)
 	fmt.Printf("CATEGORY-STATION: %s\n", station)
+	fmt.Printf("EMAIL: %s\n", email)
 	//fmt.Printf("END-OF-LOG:\n")
 
 }
