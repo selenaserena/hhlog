@@ -81,6 +81,38 @@ func askTransmitter() string {
 	return askChoiceList("category-transmitter", []string{"ONE", "TWO"})
 }
 
+func askOverlay() string {
+	return askChoiceList("category-overlay", []string{"NONE", "LIMITED-ANTENNAS"})
+}
+
+func askClubName() string {
+	return askString("club name")
+}
+
+func askFullName() string {
+	return askString("entrant's full name")
+}
+
+func askStreetAddress() string {
+	return askString("street address")
+}
+
+func askCityAddress() string {
+	return askString("city")
+}
+
+func askStateAddress() string {
+	return askString("state-province")
+}
+
+func askZipAddress() string {
+	return askString("postal code")
+}
+
+func askCountryAddress() string {
+	return askString("country")
+}
+
 func Aprl10MeterContest() {
 	contestCode := "ARRL-10"
 	email := askEmail()
@@ -91,6 +123,14 @@ func Aprl10MeterContest() {
 	power := askPower()
 	station := askStationType()
 	transmitter := askTransmitter()
+	overlay := askOverlay()
+	clubName := askClubName()
+	fullName := askFullName()
+	streetAddress := askStreetAddress()
+	cityAddress := askCityAddress()
+	stateAddress := askStateAddress()
+	zipAddress := askZipAddress()
+	countryAddress := askCountryAddress()
 
 	fmt.Printf("START-OF-LOG: 3.0\n")
 	fmt.Printf("CONTEST: %s\n", contestCode)
@@ -102,6 +142,14 @@ func Aprl10MeterContest() {
 	fmt.Printf("CATEGORY-POWER: %s\n", power)
 	fmt.Printf("CATEGORY-STATION: %s\n", station)
 	fmt.Printf("CATEGORY-TRANSMITTER: %s\n", transmitter)
+	fmt.Printf("CATEGORY-OVERLAY: %s\n", overlay)
+	fmt.Printf("CLUB: %s\n", clubName)
+	fmt.Printf("NAME: %s\n", fullName)
+	fmt.Printf("ADDRESS: %s\n", streetAddress)
+	fmt.Printf("ADDRESS-CITY: %s\n", cityAddress)
+	fmt.Printf("ADDRESS-STATE-PROVINCE: %s\n", stateAddress)
+	fmt.Printf("ADDRESS-POSTALCODE: %s\n", zipAddress)
+	fmt.Printf("ADDRESS-COUNTRY: %s\n", countryAddress)
 	fmt.Printf("EMAIL: %s\n", email)
 	//fmt.Printf("END-OF-LOG:\n")
 
