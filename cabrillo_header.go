@@ -13,6 +13,12 @@ type CodedChoice struct {
 	code string
 }
 
+type ContestChoice struct {
+	name string
+	code string
+	file string
+}
+
 func askString(prompt string) string {
 	answerString := ""
 	fmt.Printf("Enter %s:\n", prompt)
@@ -42,6 +48,17 @@ func askChoiceCode(fieldName string, options []CodedChoice) string {
 
 }
 
+func askContestChoice(options []ContestChoice) string {
+	fmt.Printf("Enter contest number:\n")
+	choiceNum := 0
+	for i := 0; i < len(options); i++ {
+		fmt.Printf("%d - %s\n", i, options[i].name)
+	}
+
+	fmt.Scanf("%d\n", &choiceNum)
+	return options[choiceNum].file
+}
+
 func askCallsign() string {
 	return askString("callsign")
 }
@@ -64,6 +81,10 @@ func askAssistedCat() string {
 
 func askLocationCode() string {
 	return askChoiceCode("location", arrl_sections)
+}
+
+func askCatOp() string {
+	return askClass([]string{"SINGLE-OP", "MULTI-OP", "CHECKLOG"})
 }
 
 func askClass(classTypes []string) string {
@@ -232,24 +253,30 @@ const (
 )
 
 func PrintCabrilloHeader() {
-
-	contestCode := askChoiceCode(
-		"contest number",
-		parseContestChoices(),
-	)
-
-	switch contestCode {
-	case ARRL10:
-		Arrl10MeterContest()
-	case NAQP_CW:
-		NorthAmQSOCW()
-	case ARRL_SS_CW:
-		NovSweepCW()
-	}
+	fileName := askContestChoice(parseContestChoices())
+	parseContestFile(fileName)
 
 }
 
-func parseContestChoices() (choices []CodedChoice) {
+func parseContestFile(fileName string) {
+	f, err := os.Open("contest_specs/" + fileName)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to open %s: %s", fileName, err)
+		os.Exit(1)
+	}
+	fileReader := bufio.NewReader(f)
+	//fmt.Printf("--------------\n")
+	for {
+		fieldtName, err := readLine(fileReader)
+		if err == io.EOF {
+			break
+		}
+		//fmt.Printf("%s\n", contestName)
+	}
+	//fmt.Printf("--------------\n")
+}
+
+func parseContestChoices() (choices []ContestChoice) {
 	f, err := os.Open("contest_specs/index")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to open index file: %s", err)
@@ -264,9 +291,9 @@ func parseContestChoices() (choices []CodedChoice) {
 
 		contestCode, err := readLine(fileReader)
 
-		readLine(fileReader)
+		fileName, _ := readLine(fileReader)
 
-		choices = append(choices, CodedChoice{contestName, contestCode})
+		choices = append(choices, ContestChoice{contestName, contestCode, fileName})
 	}
 	return choices
 }
