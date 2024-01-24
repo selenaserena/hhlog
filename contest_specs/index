@@ -1,0 +1,9 @@
+contest_name: November Sweepstakes CW
+contest_code: ARRL-SS-CW
+contest_file: november_sweepstakes.spec
+contest_name: ARRL 10-Meter Contest
+contest_code: ARRL-10
+contest_file: arrl_10.spec
+contest_name: North American QSO Party, CW
+contest_code: NAQP-CW
+contest_file: na_qso_party.spec
