@@ -266,12 +266,13 @@ func parseContestFile(fileName string) {
 	}
 	fileReader := bufio.NewReader(f)
 	//fmt.Printf("--------------\n")
+	readLine(fileReader)
 	for {
-		fieldtName, err := readLine(fileReader)
+		fieldName, err := readLine(fileReader)
 		if err == io.EOF {
 			break
 		}
-		//fmt.Printf("%s\n", contestName)
+		//fmt.Printf("%s\n", fieldName)
 	}
 	//fmt.Printf("--------------\n")
 }
