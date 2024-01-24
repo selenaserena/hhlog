@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"os"
+	"strings"
 )
 
 type CodedChoice struct {
@@ -113,7 +117,7 @@ func askCountryAddress() string {
 	return askString("country")
 }
 
-func Aprl10MeterContest() {
+func Arrl10MeterContest() {
 	contestCode := "ARRL-10"
 	email := askEmail()
 	callSign := askCallsign()
@@ -231,23 +235,49 @@ func PrintCabrilloHeader() {
 
 	contestCode := askChoiceCode(
 		"contest number",
-		[]CodedChoice{
-			{"ARRL 10-meter contest", ARRL10},
-			{"North American QSO Party - CW", NAQP_CW},
-			{"November sweepstakes CW", ARRL_SS_CW},
-			{"November sweepstakes SSB", ARRL_SS_SSB},
-		},
+		parseContestChoices(),
 	)
 
 	switch contestCode {
 	case ARRL10:
-		Aprl10MeterContest()
+		Arrl10MeterContest()
 	case NAQP_CW:
 		NorthAmQSOCW()
 	case ARRL_SS_CW:
 		NovSweepCW()
 	}
 
+}
+
+func parseContestChoices() (choices []CodedChoice) {
+	f, err := os.Open("contest_specs/index")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to open index file: %s", err)
+		os.Exit(1)
+	}
+	fileReader := bufio.NewReader(f)
+	for {
+		contestName, err := readLine(fileReader)
+		if err == io.EOF {
+			break
+		}
+
+		contestCode, err := readLine(fileReader)
+
+		readLine(fileReader)
+
+		choices = append(choices, CodedChoice{contestName, contestCode})
+	}
+	return choices
+}
+
+func readLine(fileReader *bufio.Reader) (string, error) {
+	line, err := fileReader.ReadString('\n')
+	if err == io.EOF {
+		return "", err
+	}
+	colonPos := strings.Index(line, ":")
+	return strings.TrimSpace(line[colonPos+1:]), nil
 }
 
 var arrl_sections = []CodedChoice{
