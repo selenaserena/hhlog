@@ -267,12 +267,16 @@ func parseContestFile(fileName string) {
 	fileReader := bufio.NewReader(f)
 	//fmt.Printf("--------------\n")
 	readLine(fileReader)
+	fmt.Printf("START-OF-LOG: 3.0\n")
+	code, _ := readLine(fileReader)
+	fmt.Printf("CONTEST: %s\n", code)
 	for {
 		fieldName, err := readLine(fileReader)
 		if err == io.EOF {
 			break
 		}
-		//fmt.Printf("%s\n", fieldName)
+		fmt.Printf("%s\n", fieldName)
+
 	}
 	//fmt.Printf("--------------\n")
 }
