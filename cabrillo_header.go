@@ -252,13 +252,13 @@ const (
 	ARRL_SS_SSB = "ARRL-SS-SSB"
 )
 
-func PrintCabrilloHeader() {
+func PrintCabrilloHeader(outF *os.File) {
 	fileName := askContestChoice(parseContestChoices())
-	parseContestFile(fileName)
+	parseContestFile(fileName, outF)
 
 }
 
-func parseContestFile(fileName string) {
+func parseContestFile(fileName string, outF *os.File) {
 	f, err := os.Open("contest_specs/" + fileName)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to open %s: %s", fileName, err)
@@ -267,15 +267,40 @@ func parseContestFile(fileName string) {
 	fileReader := bufio.NewReader(f)
 	//fmt.Printf("--------------\n")
 	readLine(fileReader)
-	fmt.Printf("START-OF-LOG: 3.0\n")
+	fmt.Fprintf(outF, "START-OF-LOG: 3.0\n")
 	code, _ := readLine(fileReader)
-	fmt.Printf("CONTEST: %s\n", code)
+	fmt.Fprintf(outF, "CONTEST: %s\n", code)
 	for {
 		fieldName, err := readLine(fileReader)
 		if err == io.EOF {
 			break
 		}
-		fmt.Printf("%s\n", fieldName)
+		switch fieldName {
+		case "CALLSIGN":
+			callSign := askCallsign()
+			fmt.Fprintf(outF, "CALLSIGN: %s\n", callSign)
+		case "LOCATION":
+			location := askLocationCode()
+			fmt.Fprintf(outF, "LOCATION: %s\n", location)
+		case "CATEGORY-ASSISTED":
+			catOpAs := askAssistedCat()
+			fmt.Fprintf(outF, "CATEGORY-ASSISTED: %s\n", catOpAs)
+		case "CATEGORY-MODE":
+			mode := askMode()
+			fmt.Fprintf(outF, "CATEGORY-MODE: %s\n", mode)
+		case "CATEGORY-POWER":
+			power := askPower()
+			fmt.Fprintf(outF, "CATEGORY-POWER: %s\n", power)
+		case "CATEGORY-OPERATOR":
+			catOp := askCatOp()
+			fmt.Fprintf(outF, "CATEGORY-OPERATOR: %s\n", catOp)
+		case "CATEGORY-STATION":
+			station := askStationType()
+			fmt.Fprintf(outF, "CATEGORY-STATION: %s\n", station)
+
+		}
+
+		//fmt.Printf("%s\n", fieldName)
 
 	}
 	//fmt.Printf("--------------\n")

@@ -1,7 +1,6 @@
 contest_name: North American QSO Party, CW
 contest_code: NAQP-CW
 CALLSIGN
-CATEGORY
 NAME
 ADDRESS
 ADDRESS-CITY
